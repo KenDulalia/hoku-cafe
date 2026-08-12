@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS menu_items (
   UNIQUE KEY unique_menu_item_name (name)
 );
 
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT IGNORE INTO menu_items (name, description, price, image, alt, category)
 VALUES
   (
