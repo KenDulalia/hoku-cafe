@@ -30,6 +30,23 @@ app.get("/api/menu", async (request, response) => {
   }
 });
 
+app.get("/api/messages", async (request, response) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT id, customer_name, email, message, created_at
+       FROM contact_messages
+       ORDER BY created_at DESC`
+    );
+
+    response.json(rows);
+  } catch (error) {
+    response.status(500).json({
+      message: "Unable to load contact messages.",
+      error: error.message,
+    });
+  }
+});
+
 app.post("/api/messages", async (request, response) => {
   const { customerName, email, message } = request.body;
 
