@@ -75,6 +75,60 @@ app.post("/api/messages", async (request, response) => {
   }
 });
 
+app.post("/api/orders", async (request, response) => {
+  const { customerName, email, items } = request.body;
+
+  if (!customerName || !email || !items || items.length === 0) {
+    return response.status(400).json({
+      message: "Customer name, email, and order items are required.",
+    });
+  }
+
+  const connection = await pool.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    let totalAmount = 0;
+
+    for (const item of items) {
+      totalAmount += Number(item.price) * Number(item.quantity);
+    }
+
+    const [orderResult] = await connection.query(
+      `INSERT INTO orders (customer_name, email, total_amount)
+       VALUES (?, ?, ?)`,
+      [customerName, email, totalAmount]
+    );
+
+    const orderId = orderResult.insertId;
+
+    for (const item of items) {
+      await connection.query(
+        `INSERT INTO order_items (order_id, menu_item_id, quantity, price)
+         VALUES (?, ?, ?, ?)`,
+        [orderId, item.menuItemId, item.quantity, item.price]
+      );
+    }
+
+    await connection.commit();
+
+    response.status(201).json({
+      message: "Order saved successfully.",
+      orderId,
+    });
+  } catch (error) {
+    await connection.rollback();
+
+    response.status(500).json({
+      message: "Unable to save order.",
+      error: error.message,
+    });
+  } finally {
+    connection.release();
+  }
+});
+
 app.listen(port, () => {
   console.log(`Hoku Cafe API running at http://127.0.0.1:${port}`);
 });

@@ -359,6 +359,46 @@ p {
   color: inherit;
   font-size: 0.95rem;
 }
+.admin-section {
+  padding: clamp(64px, 8vw, 108px) clamp(20px, 5vw, 72px);
+  background: var(--paper);
+}
+
+.admin-section h2 {
+  margin: 0 0 28px;
+  color: var(--mint-dark);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.admin-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.admin-message {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 14px 34px rgba(38, 52, 47, 0.08);
+}
+
+.admin-message h3 {
+  margin: 0 0 8px;
+  color: var(--mint-dark);
+  font-size: 1.1rem;
+}
+
+.admin-message p {
+  margin-bottom: 10px;
+  font-size: 0.98rem;
+}
+
+.admin-message p:last-child {
+  margin-bottom: 0;
+}
 
 @media (max-width: 640px) {
   .site-header {
@@ -409,7 +449,8 @@ p {
   }
 
   .menu-grid,
-  .story-section {
+  .story-section,
+  .admin-list {
     grid-template-columns: 1fr;
   }
 

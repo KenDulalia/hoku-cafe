@@ -4,6 +4,7 @@ import Hero from "./components/Hero.jsx";
 import MenuSection from "./components/MenuSection.jsx";
 import StorySection from "./components/StorySection.jsx";
 import VisitSection from "./components/VisitSection.jsx";
+import AdminMessages from "./components/AdminMessages.jsx";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <MenuSection />
         <StorySection />
         <VisitSection />
+        <AdminMessages />
       </main>
       <Footer />
     </>
