@@ -5,6 +5,8 @@ import MenuSection from "./components/MenuSection.jsx";
 import StorySection from "./components/StorySection.jsx";
 import VisitSection from "./components/VisitSection.jsx";
 import AdminMessages from "./components/AdminMessages.jsx";
+import OrderSection from "./components/OrderSection.jsx";
+import AdminOrders from "./components/AdminOrders.jsx";
 
 export default function App() {
   return (
@@ -13,9 +15,11 @@ export default function App() {
       <main>
         <Hero />
         <MenuSection />
+        <OrderSection />
         <StorySection />
         <VisitSection />
         <AdminMessages />
+        <AdminOrders />
       </main>
       <Footer />
     </>

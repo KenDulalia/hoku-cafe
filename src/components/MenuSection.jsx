@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const iconByName = {
   "Hoku Iced Latte": Coffee,
   "Matcha Latte": CupSoda,
+  Brownies: Cookie,
   "Classic Cookies": Cookie,
 };
 
@@ -11,6 +12,7 @@ export default function MenuSection() {
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     async function loadMenuItems() {
@@ -33,6 +35,13 @@ export default function MenuSection() {
     loadMenuItems();
   }, []);
 
+  const categories = ["All", ...new Set(menuItems.map((item) => item.category))];
+
+  const filteredMenuItems =
+    selectedCategory === "All"
+      ? menuItems
+      : menuItems.filter((item) => item.category === selectedCategory);
+
   return (
     <section className="menu-section" id="menu">
       <div className="section-heading">
@@ -43,8 +52,23 @@ export default function MenuSection() {
       {isLoading && <p className="menu-status">Loading menu...</p>}
       {errorMessage && <p className="menu-status">{errorMessage}</p>}
 
+      {!isLoading && !errorMessage && (
+        <div className="category-filter">
+          {categories.map((category) => (
+            <button
+              type="button"
+              className={selectedCategory === category ? "is-active" : ""}
+              onClick={() => setSelectedCategory(category)}
+              key={category}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="menu-grid">
-        {menuItems.map((item) => {
+        {filteredMenuItems.map((item) => {
           const Icon = iconByName[item.name] ?? Coffee;
 
           return (

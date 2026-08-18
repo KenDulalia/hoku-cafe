@@ -47,6 +47,34 @@ app.get("/api/messages", async (request, response) => {
   }
 });
 
+app.get("/api/orders", async (request, response) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT
+        orders.id AS order_id,
+        orders.customer_name,
+        orders.email,
+        menu_items.name AS item_name,
+        order_items.quantity,
+        order_items.price,
+        orders.total_amount,
+        orders.status,
+        orders.created_at
+       FROM orders
+       JOIN order_items ON orders.id = order_items.order_id
+       JOIN menu_items ON menu_items.id = order_items.menu_item_id
+       ORDER BY orders.created_at DESC`
+    );
+
+    response.json(rows);
+  } catch (error) {
+    response.status(500).json({
+      message: "Unable to load orders.",
+      error: error.message,
+    });
+  }
+});
+
 app.post("/api/messages", async (request, response) => {
   const { customerName, email, message } = request.body;
 
