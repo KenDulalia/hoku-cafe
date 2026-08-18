@@ -2,6 +2,16 @@
 
 Hoku Cafe is a pastel coffee shop website built with React, Vite, Express, and MySQL.
 
+## Screenshots
+
+### Homepage
+
+![Hoku Cafe homepage](screenshots/homepage.png)
+
+### Menu and Order
+
+![Hoku Cafe menu and order section](screenshots/menu-order.png)
+
 ## Tech Stack
 
 - React
